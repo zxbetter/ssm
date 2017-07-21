@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration   PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://www.mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <!-- mybatis-generator 3） -->
+
+    <!-- 引入配置文件 -->
+    <properties resource="generator.properties"/>
+
+    <!-- 指定数据库驱动 jar 的位置 -->
+    <classPathEntry location="${jdbc.driverPath}"/>
+
+    <context id="ssm_demo">
+
+        <commentGenerator>
+            <!-- 取消注释 -->
+            <property name="suppressAllComments" value="true"/>
+
+            <!-- 取消注释时间戳 -->
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- jdbc 连接配置 -->
+        <jdbcConnection driverClass="${jdbc.driverClass}" connectionURL="${jdbc.url}"
+                        userId="${jdbc.username}" password="${jdbc.password}"/>
+
+        <!-- 类型转换,非必须，在数据库类型和 java 类型之间的转换控制 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成 model 类的配置
+        targetPackage: 指定 model 类的包名
+        targetProject: 指定在该项目下的路径
+         -->
+        <javaModelGenerator targetPackage="com.devin.demo.model" targetProject="src/main/java">
+            <!-- 是否允许子包，即 targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+
+            <!-- 是否对 model 类添加空的构造方法 -->
+            <property name="constructorBased" value="true"/>
+
+            <!-- 是否对 String 类型的数据进行 trim 操作 -->
+            <property name="trimStrings" value="true"/>
+
+            <!-- 生成的 model 类是否不可变，即是否不生成 setter 方法 -->
+            <property name="immutable" value="false"/>
+        </javaModelGenerator>
+
+        <!-- 生成 .xml 文件的配置 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!-- 生成 DAO 接口的配置
+        type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+        type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+        type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.devin.demo.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <!-- enable*Example 是否生成 example 类 -->
+        <table tableName="T_DEMO" domainObjectName="Demo"
+               enableCountByExample="false" enableSelectByExample="false"
+               enableDeleteByExample="false" enableUpdateByExample="false">
+
+            <!-- 忽略的字段 -->
+            <!--<ignoreColumn column="ADDRESS"/>-->
+
+            <!-- 指定列的 java 类型 -->
+            <!--<columnOverride column="" jdbcType=""/>-->
+        </table>
+    </context>
+
+    <!-- mybatis-generator 4） -->
+    <!-- Edit Configurations... ==> + ==> Maven ==> Name:xxx, Command Line: mybatis-generator:generate -e -->
+</generatorConfiguration>
