@@ -1,0 +1,4 @@
+放置一些其他相关文件
+
+# 在 generatorConfig.xml 文件中引入 mybatis-generator-config 模式，可以有提示功能。
+mybatis-generator-config_1_0.dtd
