@@ -1,4 +1,4 @@
-package com.devin.demo.mapper;
+package devin.demo.mapper;
 
 import org.apache.ibatis.annotations.Param;
 

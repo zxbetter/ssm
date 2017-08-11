@@ -1,8 +1,8 @@
-package com.devin.demo.controller;
+package devin.demo.controller;
 
-import com.devin.demo.model.Demo;
-import com.devin.demo.model.ResponseData;
-import com.devin.demo.service.IDemoService;
+import devin.demo.model.Demo;
+import devin.demo.model.ResponseData;
+import devin.demo.service.IDemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

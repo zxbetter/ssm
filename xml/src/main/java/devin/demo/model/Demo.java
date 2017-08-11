@@ -1,4 +1,4 @@
-package com.devin.demo.model;
+package devin.demo.model;
 
 public class Demo {
     private Long id;

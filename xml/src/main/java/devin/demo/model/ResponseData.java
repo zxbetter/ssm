@@ -1,4 +1,4 @@
-package com.devin.demo.model;
+package devin.demo.model;
 
 import java.util.List;
 

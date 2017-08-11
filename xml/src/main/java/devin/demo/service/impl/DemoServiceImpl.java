@@ -1,8 +1,8 @@
-package com.devin.demo.service.impl;
+package devin.demo.service.impl;
 
-import com.devin.demo.mapper.DemoMapper;
-import com.devin.demo.model.Demo;
-import com.devin.demo.service.IDemoService;
+import devin.demo.mapper.DemoMapper;
+import devin.demo.model.Demo;
+import devin.demo.service.IDemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

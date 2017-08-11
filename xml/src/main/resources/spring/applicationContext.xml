@@ -17,7 +17,7 @@
     <context:property-placeholder location="classpath:db.properties"/>
 
     <!-- 组件扫描和自动装配 -->
-    <context:component-scan base-package="com.devin.demo"/>
+    <context:component-scan base-package="devin.demo"/>
 
     <!-- dataSource 配置 -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -36,7 +36,7 @@
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.devin.demo.mapper"/>
+        <property name="basePackage" value="devin.demo.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
     <!-- mybatis 配置 end -->
@@ -65,7 +65,7 @@
     <!-- 配置 AOP -->
     <aop:config>
         <aop:pointcut id="allServicePointcut"
-                      expression="execution(* com.devin.demo.service..*Impl.*(..))"/>
+                      expression="execution(* devin.demo.service..*Impl.*(..))"/>
 
         <aop:advisor advice-ref="transactionInterceptor" pointcut-ref="allServicePointcut"/>
     </aop:config>

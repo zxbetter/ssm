@@ -1,6 +1,6 @@
-package com.devin.demo.mapper;
+package devin.demo.mapper;
 
-import com.devin.demo.model.Demo;
+import devin.demo.model.Demo;
 
 public interface DemoMapper {
     int deleteByPrimaryKey(Long id);

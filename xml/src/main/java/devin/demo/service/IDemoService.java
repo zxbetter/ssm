@@ -1,7 +1,7 @@
-package com.devin.demo.service;
+package devin.demo.service;
 
 
-import com.devin.demo.model.Demo;
+import devin.demo.model.Demo;
 
 /**
  * Demo 相关的操作

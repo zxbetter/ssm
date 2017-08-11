@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.devin.demo.mapper.DemoMapper">
-  <resultMap id="BaseResultMap" type="com.devin.demo.model.Demo">
+<mapper namespace="devin.demo.mapper.DemoMapper">
+  <resultMap id="BaseResultMap" type="devin.demo.model.Demo">
     <constructor>
       <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="LOGIN_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -26,7 +26,7 @@
     delete from t_demo
     where ID = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.devin.demo.model.Demo">
+  <insert id="insert" parameterType="devin.demo.model.Demo">
     insert into t_demo (ID, LOGIN_NAME, LOGIN_PWD, 
       NICK_NAME, REAL_NAME, GENDER, 
       PHONE, ADDRESS)
@@ -34,7 +34,7 @@
       #{nickName,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, 
       #{phone,jdbcType=CHAR}, #{address,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.devin.demo.model.Demo">
+  <insert id="insertSelective" parameterType="devin.demo.model.Demo">
     insert into t_demo
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -89,7 +89,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.devin.demo.model.Demo">
+  <update id="updateByPrimaryKeySelective" parameterType="devin.demo.model.Demo">
     update t_demo
     <set>
       <if test="loginName != null">
@@ -116,7 +116,7 @@
     </set>
     where ID = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.devin.demo.model.Demo">
+  <update id="updateByPrimaryKey" parameterType="devin.demo.model.Demo">
     update t_demo
     set LOGIN_NAME = #{loginName,jdbcType=VARCHAR},
       LOGIN_PWD = #{loginPwd,jdbcType=VARCHAR},

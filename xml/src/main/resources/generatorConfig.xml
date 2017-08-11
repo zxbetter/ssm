@@ -35,7 +35,7 @@
         targetPackage: 指定 model 类的包名
         targetProject: 指定在该项目下的路径
          -->
-        <javaModelGenerator targetPackage="com.devin.demo.model" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="devin.demo.model" targetProject="src/main/java">
             <!-- 是否允许子包，即 targetPackage.schemaName.tableName -->
             <property name="enableSubPackages" value="false"/>
 
@@ -58,7 +58,7 @@
         type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
         type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
         type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口-->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.devin.demo.mapper" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="devin.demo.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
 
