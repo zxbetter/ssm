@@ -28,7 +28,8 @@
         <jdbc.version>5.1.35</jdbc.version>
         <fastjson.version>1.2.23</fastjson.version>
         <log4j.version>2.7</log4j.version>
-        <servlet.version>3.0-alpha-1</servlet.version>
+        <servlet.version>4.0.0-b07</servlet.version>
+        <commons-lang3.version>3.6</commons-lang3.version>
         <!-- jar version end -->
 
         <!-- maven.plugins.version start -->
@@ -62,6 +63,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-jdbc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
                 <version>${spring.version}</version>
             </dependency>
             <dependency>
@@ -116,9 +122,16 @@
             <!-- serlvet -->
             <dependency>
                 <groupId>javax.servlet</groupId>
-                <artifactId>servlet-api</artifactId>
+                <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet.version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <!-- commons-lang3 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
