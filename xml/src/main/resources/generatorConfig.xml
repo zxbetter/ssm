@@ -39,8 +39,12 @@
             <!-- 是否允许子包，即 targetPackage.schemaName.tableName -->
             <property name="enableSubPackages" value="false"/>
 
-            <!-- 是否对 model 类添加空的构造方法 -->
-            <property name="constructorBased" value="true"/>
+            <!--
+             1. default false
+             2. true 将会创建一个包含该类所有字段的构造方法,
+             并且 BaseResultMap 将会使用构造方法而不是 setter 为每个字段设值.
+             -->
+            <property name="constructorBased" value="false"/>
 
             <!-- 是否对 String 类型的数据进行 trim 操作 -->
             <property name="trimStrings" value="true"/>

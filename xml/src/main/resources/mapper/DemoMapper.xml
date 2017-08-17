@@ -2,16 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="devin.demo.mapper.DemoMapper">
   <resultMap id="BaseResultMap" type="devin.demo.model.Demo">
-    <constructor>
-      <idArg column="ID" javaType="java.lang.Long" jdbcType="BIGINT" />
-      <arg column="LOGIN_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="LOGIN_PWD" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="NICK_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="REAL_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="GENDER" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="PHONE" javaType="java.lang.String" jdbcType="CHAR" />
-      <arg column="ADDRESS" javaType="java.lang.String" jdbcType="VARCHAR" />
-    </constructor>
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName" />
+    <result column="LOGIN_PWD" jdbcType="VARCHAR" property="loginPwd" />
+    <result column="NICK_NAME" jdbcType="VARCHAR" property="nickName" />
+    <result column="REAL_NAME" jdbcType="VARCHAR" property="realName" />
+    <result column="GENDER" jdbcType="VARCHAR" property="gender" />
+    <result column="PHONE" jdbcType="CHAR" property="phone" />
+    <result column="ADDRESS" jdbcType="VARCHAR" property="address" />
   </resultMap>
   <sql id="Base_Column_List">
     ID, LOGIN_NAME, LOGIN_PWD, NICK_NAME, REAL_NAME, GENDER, PHONE, ADDRESS

@@ -17,21 +17,6 @@ public class Demo {
 
     private String address;
 
-    public Demo(Long id, String loginName, String loginPwd, String nickName, String realName, String gender, String phone, String address) {
-        this.id = id;
-        this.loginName = loginName;
-        this.loginPwd = loginPwd;
-        this.nickName = nickName;
-        this.realName = realName;
-        this.gender = gender;
-        this.phone = phone;
-        this.address = address;
-    }
-
-    public Demo() {
-        super();
-    }
-
     public Long getId() {
         return id;
     }
