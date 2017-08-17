@@ -77,4 +77,9 @@
 
     <!-- mybatis-generator 4） -->
     <!-- Edit Configurations... ==> + ==> Maven ==> Name:xxx, Command Line: mybatis-generator:generate -e -->
+
+    <!--
+     注意事项:
+     1. 表中没有主键的时候只能生成 insert 语句.
+     -->
 </generatorConfiguration>
