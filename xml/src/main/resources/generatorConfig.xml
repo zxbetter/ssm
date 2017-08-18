@@ -71,11 +71,26 @@
                enableCountByExample="false" enableSelectByExample="false"
                enableDeleteByExample="false" enableUpdateByExample="false">
 
+            <!--
+             指定主键生成的策略
+             http://www.mybatis.org/generator/configreference/generatedKey.html
+             1. column: 指定生成列的列名
+             2. sqlStatement: 如果该列是 identity 列, 则可以使用预定于的值, 如 MySql, DB2, Cloudscape,
+             DB2_MF, Derby, HSQLDB, Informix, SqlServer, SYBASE, JDBC.
+             3. 对于 identity 列, 设置 type=post, identity=true; 对于 sequence 列, 设置 type=pre, identity=false.
+             -->
+            <generatedKey column="ID" sqlStatement="Mysql" identity="true" type="post" />
+            <!--<generatedKey column="ID" sqlStatement="select SEQ_ID.nextval from dual" identity="false" type="pre" />-->
+
+
             <!-- 忽略的字段 -->
             <!--<ignoreColumn column="ADDRESS"/>-->
 
             <!-- 指定列的 java 类型 -->
             <!--<columnOverride column="" jdbcType=""/>-->
+
+            <!-- 对列进行重命名 -->
+            <!--<columnRenamingRule searchString="^T_" replaceString="" />-->
         </table>
     </context>
 
