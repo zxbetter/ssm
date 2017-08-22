@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <WatchedResource>${catalina.base}/conf/web.xml</WatchedResource>
+    <Resource name="jdbc/spittrDS" auth="Container" type="javax.sql.DataSource"
+              username="root" password="root" driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/ssm_spittr?characterEncoding=utf-8" />
+</Context>
