@@ -2,6 +2,9 @@ package devin.spittr.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+
 /**
  * Servlet 3.0 中, 容器会在类路径中查找实现 ${@link javax.servlet.ServletContainerInitializer} 接口的类,
  * 并用其配置 Servlet 容器。
@@ -50,5 +53,31 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
     @Override
     protected String[] getServletMappings() {
         return new String[] {"/"};
+    }
+
+    /**
+     * 设置容器的初始化参数
+     * @param servletContext
+     * @throws ServletException
+     * @since 1.0.0
+     */
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext);
+
+        // 激活 Profile
+        // 依赖两个独立的属性 spring.profiles.default 和 spring.profiles.active
+        // 可以设置多个, 并用逗号隔开
+        // 激活方式
+        // 1. 作为 DispatcherServlet 的初始化参数
+        // 2. 作为 Web 应用的上下文参数
+        // 3. 作为 JNDI 条目
+        // 4. 作为环境变量
+        // 5. 作为 JVM 的系统属性
+        // 6. 在集成测试类上，使用 @ActiveProfiles 注解设置
+
+        // 设置容器上下文的初始化参数, 等价于 web.xml 中的 <context-param></context-param>
+        servletContext.setInitParameter("spring.profiles.default", "qa");
+        servletContext.setInitParameter("spring.profiles.active", "qa");
     }
 }

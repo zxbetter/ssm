@@ -1,5 +1,6 @@
 package devin.spittr.web;
 
+import devin.spittr.constant.BaseConst;
 import devin.spittr.data.SpittleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @RequestMapping("/spittles")
 public class SpittleController {
-    private static final String MAX_LONG_AS_STRING = Long.toString(Long.MAX_VALUE);
 
     @Autowired
     private SpittleRepository spittleRepository;
@@ -35,7 +35,7 @@ public class SpittleController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public String spittles(Model model,
-                           @RequestParam(value = "max", defaultValue = MAX_LONG_AS_STRING) long max,
+                           @RequestParam(value = "max", defaultValue = BaseConst.MAX_LONG_AS_STRING) long max,
                            @RequestParam(value = "count", defaultValue = "20") int count) {
         model.addAttribute("spittleList", spittleRepository.findSpittles(max, count));
         return "spittles";
