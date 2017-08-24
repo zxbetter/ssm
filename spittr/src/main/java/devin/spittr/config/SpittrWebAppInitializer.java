@@ -77,7 +77,7 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
         // 6. 在集成测试类上，使用 @ActiveProfiles 注解设置
 
         // 设置容器上下文的初始化参数, 等价于 web.xml 中的 <context-param></context-param>
-        servletContext.setInitParameter("spring.profiles.default", "qa");
-        servletContext.setInitParameter("spring.profiles.active", "qa");
+        servletContext.setInitParameter("spring.profiles.default", "prod");
+        // servletContext.setInitParameter("spring.profiles.active", activeValue);
     }
 }

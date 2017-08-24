@@ -1,9 +1,7 @@
 package devin.spittr.config;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 /**
@@ -16,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @ComponentScan(basePackages = {"devin.spittr"},
         excludeFilters = {@ComponentScan.Filter(type = FilterType.ANNOTATION, value = EnableWebMvc.class)})
 
-// 通过 @Import 注解可以把其他 java 配置类合并过来
+// 通过 @Import 注解可以把其他 java 配置类合并过来, @ImportResource 能合并 xml 配置文件
 @Import(DataSourceConfiguration.class)
 public class RootConfig {
 }

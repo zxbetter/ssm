@@ -1,15 +1,25 @@
 package devin.spittr.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.jndi.JndiObjectFactoryBean;
 
+import javax.naming.NamingException;
 import javax.sql.DataSource;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * 数据源的配置文件
@@ -17,7 +27,11 @@ import javax.sql.DataSource;
  * @since 1.0.0
  */
 @Configuration
+@PropertySource("classpath:app.properties")    // Spring.Environment-1
 public class DataSourceConfiguration {
+
+    /** 日志打印 */
+    private static final Logger LOGGER = LogManager.getLogger(DataSourceConfiguration.class);
 
     /**
      * 配置嵌入式数据源 (开发环境)
@@ -46,12 +60,21 @@ public class DataSourceConfiguration {
     @Profile("qa")
     @Bean("dataSource")
     public DataSource dbcpDataSource() {
+
+        // Spring.Environment-3
+        // Environment 的相关方法
+        /*LOGGER.info(env.getProperty("mysql.driver", "no driver"));
+        LOGGER.info(env.getProperty("mysql.initial.size", Integer.class, 0));
+        LOGGER.info(env.getRequiredProperty("mysql.url"));
+        LOGGER.info(Stream.of(env.getActiveProfiles()).reduce(String::concat));
+        LOGGER.info(Stream.of(env.getDefaultProfiles()).reduce(String::concat));*/
+
         BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        basicDataSource.setUrl("jdbc:mysql://localhost:3306/ssm_spittr?characterEncoding=utf-8");
-        basicDataSource.setUsername("root");
-        basicDataSource.setPassword("root");
-        basicDataSource.setInitialSize(5);
+        basicDataSource.setDriverClassName(mysqlDriver);
+        basicDataSource.setUrl(mysqlUrl);
+        basicDataSource.setUsername(mysqlUsername);
+        basicDataSource.setPassword(mysqlPassword);
+        basicDataSource.setInitialSize(env.getProperty("mysql.initial.size", Integer.class, 0));
 
         return basicDataSource;
 
@@ -62,10 +85,10 @@ public class DataSourceConfiguration {
         // 的类加载问题, 这样的环境包括 OSGi 容器
         // 3. DriverManagerDataSource: 对每个请求返回新的连接
         /*DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/ssm_spittr?characterEncoding=utf-8");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setDriverClassName(mysqlDriver);
+        dataSource.setUrl(mysqlUrl);
+        dataSource.setUsername(mysqlUsername);
+        dataSource.setPassword(mysqlPassword);
         return dataSource;*/
     }
 
@@ -78,16 +101,13 @@ public class DataSourceConfiguration {
     @Profile("prod")
     @Bean("dataSource")
     public DataSource jndiDataSource() {
-        JndiObjectFactoryBean jndiObjectFactoryBean = new JndiObjectFactoryBean();
-        jndiObjectFactoryBean.setJndiName("jdbc/spittrDS");
+        final JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
 
         // 如果应用程序运行在 Java 应用服务器中, 需要设置 resource-ref 为 true
         // 这样给定的 jndi-name 将会自动添加 "java:" 前缀.
-        jndiObjectFactoryBean.setResourceRef(true);
+        jndiDataSourceLookup.setResourceRef(true);
 
-        jndiObjectFactoryBean.setProxyInterface(DataSource.class);
-
-        return (DataSource) jndiObjectFactoryBean.getObject();
+        return jndiDataSourceLookup.getDataSource(jndiName);
     }
 
     /**
@@ -115,4 +135,53 @@ public class DataSourceConfiguration {
         // 中声明(组件扫描/xml)
         return new NamedParameterJdbcTemplate(dataSource);
     }
+
+    // 获取外部值(配置文件等)
+    // 1. 使用 Spring 的 Environment
+    // 1) @PropertySource(path) 将属性文件加载到 Spring 的 Environment 中.
+    // 2) env.getProperty(key, defaultVlaue) 获取属性值
+    @Autowired
+    private Environment env;    // Spring.Environment-2
+
+    // 2. 解析属性占位符    属性占位符-1
+    // 1). xml: <context: property-placeholder />;
+    // javaConfig: PropertySourcesPlaceholderConfigurer/PropertyPlaceholderConfigurer
+    // 推荐 PropertySourcesPlaceholderConfigurer, 因为它能基于 Spring Environment 及其属性源来解析占位符
+    // 这个好像不是必须的, 类上面有 PropertySource 也可以.
+    // 2) xml: ${key}; javaConfig: @Value("${key}")
+
+    // 3. SpringEL
+    // #{systemProperties["key"]}    // 引用系统属性
+    // #{object.field}    // 引用对象或对象属性
+    // #{object.method()?.toUpperCase()}    // ?. 先判空
+    // #{T(java.lang.Math).PI}    // T() 产生 Class 对象
+    // SpringEL 能使用各种运算符, lt = <, gt = >, eq = ==, le = <=, ge = >=, and, or, not, |, matches
+    // SpringEL 支持集合操作, [] 按索引获取集合, 数组或字符串的元素
+    // .?[] 过滤集合的元素, .^[] / .$[] 查询第一或最后一个匹配项, .![] 将集合的某个属性映射到另一个集合
+
+    // 属性占位符-3
+    @Value("${mysql.driver}")
+    private String mysqlDriver;
+
+    @Value("${mysql.url}")
+    private String mysqlUrl;
+
+    @Value("${mysql.username}")
+    private String mysqlUsername;
+
+    @Value("${mysql.password}")
+    private String mysqlPassword;
+
+    @Value("${jndi.name}")
+    private String jndiName;
+
+    // 属性占位符-2
+    // 注意 static
+    /*@Bean
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer placeholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        placeholderConfigurer.setLocation(new ClassPathResource("app.properties"));
+        placeholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
+        return placeholderConfigurer;
+    }*/
 }

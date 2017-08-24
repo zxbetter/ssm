@@ -10,5 +10,6 @@ public interface BaseConst {
     // 运行时常量, String.valueOf() 也是
     // String MAX_LONG_AS_STRING = Long.toString(Long.MAX_VALUE);
     // 编译时常量
+    /** Long 型最大值的字符串表示 */
     String MAX_LONG_AS_STRING = Long.MAX_VALUE + "";
 }
