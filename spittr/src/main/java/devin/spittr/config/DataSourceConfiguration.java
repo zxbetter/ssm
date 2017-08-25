@@ -14,12 +14,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
-import org.springframework.jndi.JndiObjectFactoryBean;
 
-import javax.naming.NamingException;
 import javax.sql.DataSource;
-import java.util.Properties;
-import java.util.Set;
 
 /**
  * 数据源的配置文件
@@ -101,13 +97,7 @@ public class DataSourceConfiguration {
     @Profile("prod")
     @Bean("dataSource")
     public DataSource jndiDataSource() {
-        final JndiDataSourceLookup jndiDataSourceLookup = new JndiDataSourceLookup();
-
-        // 如果应用程序运行在 Java 应用服务器中, 需要设置 resource-ref 为 true
-        // 这样给定的 jndi-name 将会自动添加 "java:" 前缀.
-        jndiDataSourceLookup.setResourceRef(true);
-
-        return jndiDataSourceLookup.getDataSource(jndiName);
+        return new JndiDataSourceLookup().getDataSource(jndiName);
     }
 
     /**
