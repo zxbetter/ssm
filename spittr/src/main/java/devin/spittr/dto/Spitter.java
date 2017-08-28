@@ -13,20 +13,27 @@ public class Spitter {
     private Long id;
 
     @NotNull
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 30, message = "first name invalid, min 2, max 30")
     private String firstName;
 
     @NotNull
-    @Size(min = 2, max = 30)
+    @Size(min = 2, max = 30, message = "last name invalid, min 2, max 30")
     private String lastName;
 
     @NotNull
-    @Size(min = 5, max = 16)
+    @Size(min = 5, max = 16, message = "username invalid, min 5, max 16")
     private String username;
 
     @NotNull
-    @Size(min = 5, max = 25)
+    @Size(min = 5, max = 25, message = "password invalid, min 5, max 25")
     private String password;
+
+    private String email;
+
+    private Boolean updateByEmail;
+
+    public Spitter() {
+    }
 
     public Spitter(String firstName, String lastName, String username, String password) {
         this(null, firstName, lastName, username, password);
@@ -85,6 +92,24 @@ public class Spitter {
         return this;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public Spitter setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Boolean getUpdateByEmail() {
+        return updateByEmail;
+    }
+
+    public Spitter setUpdateByEmail(Boolean updateByEmail) {
+        this.updateByEmail = updateByEmail;
+        return this;
+    }
+
     @Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj, "id");
@@ -103,6 +128,8 @@ public class Spitter {
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", updateByEmail=" + updateByEmail +
                 '}';
     }
 }

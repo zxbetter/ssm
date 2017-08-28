@@ -1,7 +1,7 @@
 package devin.spittr.web;
 
-import devin.spittr.data.SpitterRepository;
 import devin.spittr.dto.Spitter;
+import devin.spittr.service.SpitterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import javax.validation.Valid;
 public class SpitterController {
 
     @Autowired
-    private SpitterRepository spitterRepository;
+    private SpitterService spitterService;
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String showRegistrationForm() {
@@ -48,13 +48,13 @@ public class SpitterController {
             return "registerForm";
         }
 
-        spitterRepository.save(spitter);
+        spitterService.save(spitter);
         return "redirect:/spitter/" + spitter.getUsername();
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public String showSpitterProfile(@PathVariable("username") String username, Model model) {
-        Spitter spitter = spitterRepository.findByUsername(username);
+        Spitter spitter = spitterService.findByUsername(username);
         model.addAttribute("spitter", spitter);
         return "profile";
     }

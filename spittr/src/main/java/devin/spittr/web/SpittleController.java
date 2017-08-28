@@ -1,7 +1,7 @@
 package devin.spittr.web;
 
 import devin.spittr.constant.BaseConst;
-import devin.spittr.data.SpittleRepository;
+import devin.spittr.service.SpittleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class SpittleController {
 
     @Autowired
-    private SpittleRepository spittleRepository;
+    private SpittleService spittleService;
 
     /**
      * {@link RequestParam} 查询参数
@@ -37,7 +37,7 @@ public class SpittleController {
     public String spittles(Model model,
                            @RequestParam(value = "max", defaultValue = BaseConst.MAX_LONG_AS_STRING) long max,
                            @RequestParam(value = "count", defaultValue = "20") int count) {
-        model.addAttribute("spittleList", spittleRepository.findSpittles(max, count));
+        model.addAttribute("spittleList", spittleService.findSpittles(max, count));
         return "spittles";
     }
 
@@ -53,7 +53,7 @@ public class SpittleController {
      */
     @RequestMapping(value = "/{spittleId}", method = RequestMethod.GET)
     public String spittle(@PathVariable("spittleId") Long spittleId, Model model) {
-        model.addAttribute("spittle", spittleRepository.findOne(spittleId));
+        model.addAttribute("spittle", spittleService.findOne(spittleId));
         return "spittle";
     }
 }
