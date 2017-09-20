@@ -29,6 +29,7 @@
         <commons-dbcp2.version>2.1.1</commons-dbcp2.version>
         <fastjson.version>1.2.23</fastjson.version>
         <log4j.version>2.7</log4j.version>
+        <logback.version>1.2.3</logback.version>
         <servlet.version>4.0.0-b07</servlet.version>
         <commons-lang3.version>3.6</commons-lang3.version>
         <!-- jar version end -->
@@ -120,11 +121,11 @@
                 <version>${fastjson.version}</version>
             </dependency>
 
-            <!-- log4j -->
+            <!-- logback -->
             <dependency>
-                <groupId>org.apache.logging.log4j</groupId>
-                <artifactId>log4j-core</artifactId>
-                <version>${log4j.version}</version>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
             </dependency>
 
             <!-- serlvet -->

@@ -1,8 +1,8 @@
 package devin.spittr.config;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 public class DataSourceConfiguration {
 
     /** 日志打印 */
-    private static final Logger LOGGER = LogManager.getLogger(DataSourceConfiguration.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataSourceConfiguration.class);
 
     /**
      * 配置嵌入式数据源 (开发环境)
@@ -40,6 +40,7 @@ public class DataSourceConfiguration {
     @Bean("dataSource")
     public DataSource embeddedDataSource() {
 
+        LOGGER.info("创建了嵌入式数据源, 用于开发环境.");
         // 可以通过 addScript() 添加 SQL 脚本文件
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
@@ -72,6 +73,7 @@ public class DataSourceConfiguration {
         basicDataSource.setPassword(mysqlPassword);
         basicDataSource.setInitialSize(env.getProperty("mysql.initial.size", Integer.class, 0));
 
+        LOGGER.info("创建 dbcp 数据源, 用于测试环境.");
         return basicDataSource;
 
         // 配置 JDBC 驱动的数据源 (与连接池数据源的区别在于没有连接池的功能)
@@ -97,6 +99,7 @@ public class DataSourceConfiguration {
     @Profile("prod")
     @Bean("dataSource")
     public DataSource jndiDataSource() {
+        LOGGER.info("创建了 jndi 数据源, 用于生产环境.");
         return new JndiDataSourceLookup().getDataSource(jndiName);
     }
 

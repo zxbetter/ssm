@@ -1,0 +1,29 @@
+<Configuration>
+
+  <property name="LOG_HOME" value="D:\\03data\\log\\xml" />
+  <property name="COLOR_CONSOLE"
+            value="%gray(%d{yyyy-MM-dd HH:mm:ss}) %highlight(%-5level) %yellow(%logger) - %msg%n" />
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>${COLOR_CONSOLE}</pattern>
+    </encoder>
+  </appender>
+
+  <appender name="ROLLINGFILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_HOME:-log}/app.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <FileNamePattern>${LOG_HOME:-log}/app.log.%d{yyyy-MM-dd}.log.gz</FileNamePattern>
+      <MaxHistory>30</MaxHistory>
+      <totalSizeCap>1GB</totalSizeCap>
+    </rollingPolicy>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+    <appender-ref ref="ROLLINGFILE" />
+  </root>
+</Configuration>
